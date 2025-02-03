@@ -1,2 +1,7 @@
-﻿Figura,Tempi,Stile,Video
-ciao,4,finisher,
+Figura,Tempi,Stile,Presa,Video
+contrario sciabolata,8,passo base,contraria,contrario_sciabolata
+basket con giro lui,8,aperta,doppia,basket_girolui
+cambio shuffle,12,aperta,normale,cambio_shuffle
+contrario base,6,aperta,contraria,contrario_base
+contrario base 8,8,aperta,contraria,contrario_base8
+flip flop,10,aperta,normale,flip_flop
