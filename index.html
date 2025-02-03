@@ -7,6 +7,11 @@
   <!-- Include Papa Parse via CDN -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
   <style>
+    /* Universal box-sizing ensures padding is included in width */
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+    
     /* Dark Mode Styling */
     body {
       font-family: Arial, sans-serif;
@@ -43,12 +48,13 @@
     /* Accordion container: center and limit width on larger screens */
     .accordion {
       max-width: 600px;
-      margin: 20px auto;
       width: 100%;
+      margin: 20px auto;
       padding: 0 10px;
     }
-    /* Accordion styles */
+    /* Accordion item styles */
     .accordion-item {
+      width: 100%;
       background: #1e1e1e;
       border-radius: 4px;
       margin-bottom: 10px;
@@ -76,10 +82,11 @@
       border-radius: 4px;
       margin-bottom: 10px;
     }
-    /* Responsive design for mobile */
+    /* Responsive adjustments for mobile */
     @media (max-width: 600px) {
       .accordion {
         margin: 20px 10px;
+        padding: 0 5px;
       }
     }
   </style>
