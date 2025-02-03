@@ -21,42 +21,53 @@
       text-align: center;
     }
     .filter-controls {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      padding: 10px;
       background: #444;
-    }
-    .filter-controls label {
-      margin: 0 10px;
+      padding: 10px;
       color: #fff;
-    }
-    .cards {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      padding: 10px;
     }
-    .card {
+    .filter-group {
+      margin: 0 10px;
+    }
+    .filter-group span {
+      margin-right: 5px;
+      font-weight: bold;
+    }
+    .filter-group label {
+      margin-right: 8px;
+      cursor: pointer;
+    }
+    /* Accordion styles */
+    .accordion {
+      margin: 20px;
+    }
+    .accordion-item {
       background: #fff;
-      width: 300px;
-      margin: 10px;
-      padding: 10px;
       border-radius: 4px;
+      margin-bottom: 10px;
+      overflow: hidden;
       box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     }
-    .card h3 {
-      margin-top: 0;
+    .accordion-header {
+      padding: 10px;
+      cursor: pointer;
+      background: #eee;
+      user-select: none;
+    }
+    .accordion-content {
+      display: none;
+      padding: 10px;
+      border-top: 1px solid #ddd;
+    }
+    .accordion-item.active .accordion-content {
+      display: block;
     }
     video {
       width: 100%;
       border-radius: 4px;
-    }
-    /* Responsive design for mobile */
-    @media (max-width: 600px) {
-      .card {
-        width: 90%;
-      }
+      margin-bottom: 10px;
     }
   </style>
 </head>
@@ -65,48 +76,42 @@
     <h1>Lindy Hop & Boogie Woogie Figures</h1>
   </header>
   
+  <!-- Checkbox filters -->
   <div class="filter-controls">
-    <label>
-      Tempi:
-      <select id="tempiFilter">
-        <option value="all">All</option>
-        <option value="6">6</option>
-        <option value="8">8</option>
-        <option value="10">10</option>
-        <option value="12">12</option>
-      </select>
-    </label>
-    <label>
-      Stile:
-      <select id="stileFilter">
-        <option value="all">All</option>
-        <option value="passo base">Passo Base</option>
-        <option value="aperta">Aperta</option>
-      </select>
-    </label>
-    <label>
-      Presa:
-      <select id="presaFilter">
-        <option value="all">All</option>
-        <option value="contraria">Contraria</option>
-        <option value="doppia">Doppia</option>
-        <option value="normale">Normale</option>
-      </select>
-    </label>
+    <div class="filter-group" id="tempiFilterGroup">
+      <span>Tempi:</span>
+      <label><input type="checkbox" value="6">6</label>
+      <label><input type="checkbox" value="8">8</label>
+      <label><input type="checkbox" value="10">10</label>
+      <label><input type="checkbox" value="12">12</label>
+    </div>
+    <div class="filter-group" id="stileFilterGroup">
+      <span>Stile:</span>
+      <label><input type="checkbox" value="passo base">Passo Base</label>
+      <label><input type="checkbox" value="aperta">Aperta</label>
+    </div>
+    <div class="filter-group" id="presaFilterGroup">
+      <span>Presa:</span>
+      <label><input type="checkbox" value="contraria">Contraria</label>
+      <label><input type="checkbox" value="doppia">Doppia</label>
+      <label><input type="checkbox" value="normale">Normale</label>
+    </div>
   </div>
   
+  <!-- Accordion container -->
   <main>
-    <div class="cards" id="cardsContainer">
-      <!-- Cards will be generated here -->
+    <div class="accordion" id="accordionContainer">
+      <!-- Accordion items will be generated here -->
     </div>
   </main>
   
   <script>
     let figures = []; // This will hold our parsed CSV data
+    let currentActiveItem = null; // Track the currently open accordion item
 
-    // Function to create and display the cards
-    function displayCards(figureList) {
-      const container = document.getElementById('cardsContainer');
+    // Function to create and display accordion items in CSV order
+    function displayAccordion(figureList) {
+      const container = document.getElementById('accordionContainer');
       container.innerHTML = ''; // Clear previous content
 
       if (figureList.length === 0) {
@@ -115,40 +120,71 @@
       }
 
       figureList.forEach(figure => {
-        // Build the card's HTML using data from the CSV.
-        // Adjust field names to match your CSV header (case-sensitive).
-        const card = document.createElement('div');
-        card.className = 'card';
-        card.innerHTML = `
-          <h3>${figure.Figura}</h3>
+        // Create the accordion item container
+        const item = document.createElement('div');
+        item.className = 'accordion-item';
+
+        // Create the header (always visible)
+        const header = document.createElement('div');
+        header.className = 'accordion-header';
+        header.textContent = figure.Figura;
+        header.addEventListener('click', () => {
+          // Collapse any currently active item (if it's not the one being clicked)
+          if (currentActiveItem && currentActiveItem !== item) {
+            currentActiveItem.classList.remove('active');
+          }
+          // Toggle this item's active state
+          item.classList.toggle('active');
+          currentActiveItem = item.classList.contains('active') ? item : null;
+        });
+        item.appendChild(header);
+
+        // Create the content section (hidden by default)
+        const content = document.createElement('div');
+        content.className = 'accordion-content';
+        content.innerHTML = `
           <video src="video/${figure.Video}.mp4" autoplay loop muted playsinline></video>
           <p><strong>Tempi:</strong> ${figure.Tempi}</p>
           <p><strong>Stile:</strong> ${figure.Stile}</p>
           <p><strong>Presa:</strong> ${figure.Presa}</p>
         `;
-        container.appendChild(card);
+        item.appendChild(content);
+
+        // Append the accordion item to the container
+        container.appendChild(item);
       });
     }
 
-    // Function to filter the figures based on user selections
+    // Helper: Get selected values from a filter group by its container ID
+    function getSelectedValues(groupId) {
+      const checkboxes = document.querySelectorAll(`#${groupId} input[type="checkbox"]`);
+      return Array.from(checkboxes)
+                  .filter(cb => cb.checked)
+                  .map(cb => cb.value);
+    }
+
+    // Function to filter figures based on multiple checkbox filters
     function filterFigures() {
-      const tempiValue = document.getElementById('tempiFilter').value;
-      const stileValue = document.getElementById('stileFilter').value;
-      const presaValue = document.getElementById('presaFilter').value;
+      const selectedTempi = getSelectedValues('tempiFilterGroup');
+      const selectedStile = getSelectedValues('stileFilterGroup');
+      const selectedPresa = getSelectedValues('presaFilterGroup');
 
       const filteredFigures = figures.filter(figure => {
-        return (tempiValue === 'all' || figure.Tempi === tempiValue) &&
-               (stileValue === 'all' || figure.Stile.toLowerCase() === stileValue) &&
-               (presaValue === 'all' || figure.Presa.toLowerCase() === presaValue);
+        // For each group, if no checkbox is selected then accept all values,
+        // otherwise check if the figure's value is in the selected list.
+        const tempiMatch = selectedTempi.length === 0 || selectedTempi.includes(figure.Tempi.trim());
+        const stileMatch = selectedStile.length === 0 || selectedStile.includes(figure.Stile.trim().toLowerCase());
+        const presaMatch = selectedPresa.length === 0 || selectedPresa.includes(figure.Presa.trim().toLowerCase());
+        return tempiMatch && stileMatch && presaMatch;
       });
 
-      displayCards(filteredFigures);
+      displayAccordion(filteredFigures);
     }
 
-    // Add event listeners to filter controls
-    document.getElementById('tempiFilter').addEventListener('change', filterFigures);
-    document.getElementById('stileFilter').addEventListener('change', filterFigures);
-    document.getElementById('presaFilter').addEventListener('change', filterFigures);
+    // Add event listeners to all filter checkboxes
+    document.querySelectorAll('.filter-controls input[type="checkbox"]').forEach(cb => {
+      cb.addEventListener('change', filterFigures);
+    });
 
     // Fetch the CSV file from the repository and parse it
     fetch('lista_figure.csv')
@@ -157,16 +193,15 @@
         const results = Papa.parse(csvText, { header: true, skipEmptyLines: true });
         figures = results.data;
 
-        // If necessary, you can convert numeric fields (e.g., Tempi) here:
+        // Normalize text values
         figures.forEach(item => {
-          item.Tempi = item.Tempi.trim(); // If you want to ensure it's a string, or use parseInt(item.Tempi) if numeric.
-          // Also, you might normalize text (e.g., lowercase) for consistent filtering:
+          item.Tempi = item.Tempi.trim();
           item.Stile = item.Stile.trim().toLowerCase();
           item.Presa = item.Presa.trim().toLowerCase();
         });
 
-        // Initially display all figures
-        displayCards(figures);
+        // Initially display all figures in CSV order
+        displayAccordion(figures);
       })
       .catch(error => console.error("Error loading CSV file:", error));
   </script>
