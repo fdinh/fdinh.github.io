@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="it">
 <head>
   <meta charset="UTF-8">
   <title>Lindy Hop & Boogie Woogie Figures</title>
@@ -7,11 +7,10 @@
   <!-- Include Papa Parse via CDN -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
   <style>
-    /* Universal box-sizing ensures padding is included in width */
+    /* Universal Box Sizing */
     *, *::before, *::after {
       box-sizing: border-box;
     }
-    
     /* Dark Mode Styling */
     body {
       font-family: Arial, sans-serif;
@@ -35,7 +34,7 @@
       justify-content: center;
     }
     .filter-group {
-      margin: 0 10px;
+      margin: 5px 10px;
     }
     .filter-group span {
       margin-right: 5px;
@@ -45,14 +44,13 @@
       margin-right: 8px;
       cursor: pointer;
     }
-    /* Accordion container: center and limit width on larger screens */
+    /* Accordion container: center and limit width */
     .accordion {
       max-width: 600px;
       width: 100%;
       margin: 20px auto;
       padding: 0 10px;
     }
-    /* Accordion item styles */
     .accordion-item {
       width: 100%;
       background: #1e1e1e;
@@ -82,7 +80,6 @@
       border-radius: 4px;
       margin-bottom: 10px;
     }
-    /* Responsive adjustments for mobile */
     @media (max-width: 600px) {
       .accordion {
         margin: 20px 10px;
@@ -96,25 +93,46 @@
     <h1>Lindy Hop & Boogie Woogie Figures</h1>
   </header>
   
-  <!-- Checkbox filters -->
+  <!-- Filter Controls -->
   <div class="filter-controls">
+    <!-- Tempi Filter -->
     <div class="filter-group" id="tempiFilterGroup">
       <span>Tempi:</span>
+      <label><input type="checkbox" value="2">2</label>
+      <label><input type="checkbox" value="4">4</label>
       <label><input type="checkbox" value="6">6</label>
       <label><input type="checkbox" value="8">8</label>
       <label><input type="checkbox" value="10">10</label>
       <label><input type="checkbox" value="12">12</label>
+      <label><input type="checkbox" value="16">16</label>
     </div>
+    <!-- Stile Filter -->
     <div class="filter-group" id="stileFilterGroup">
       <span>Stile:</span>
-      <label><input type="checkbox" value="passo base">Passo Base</label>
+      <label><input type="checkbox" value="non specificato">Non specificato</label>
       <label><input type="checkbox" value="aperta">Aperta</label>
+      <label><input type="checkbox" value="passo base">Passo Base</label>
+      <label><input type="checkbox" value="caramelle">Caramelle</label>
+      <label><input type="checkbox" value="finisher">Finisher</label>
     </div>
+    <!-- Presa Filter -->
     <div class="filter-group" id="presaFilterGroup">
       <span>Presa:</span>
-      <label><input type="checkbox" value="contraria">Contraria</label>
+      <label><input type="checkbox" value="non specificato">Non specificato</label>
+      <label><input type="checkbox" value="standard">Standard</label>
+      <label><input type="checkbox" value="separati">Separati</label>
       <label><input type="checkbox" value="doppia">Doppia</label>
-      <label><input type="checkbox" value="normale">Normale</label>
+      <label><input type="checkbox" value="incrociata">Incrociata</label>
+      <label><input type="checkbox" value="chiusa">Chiusa</label>
+      <label><input type="checkbox" value="tandem">Tandem</label>
+      <label><input type="checkbox" value="aperta">Aperta</label>
+    </div>
+    <!-- Video Filter -->
+    <div class="filter-group" id="videoFilterGroup">
+      <span>Video:</span>
+      <label><input type="radio" name="videoFilter" value="all" checked> Tutti</label>
+      <label><input type="radio" name="videoFilter" value="with">Con Video</label>
+      <label><input type="radio" name="videoFilter" value="without">Senza Video</label>
     </div>
   </div>
   
@@ -126,44 +144,40 @@
   </main>
   
   <script>
-    let figures = []; // This will hold our parsed CSV data
-    let currentActiveItem = null; // Track the currently open accordion item
+    let figures = []; // Array to hold CSV data
+    let currentActiveItem = null; // To track the open accordion item
 
-    // Function to create and display accordion items in CSV order
+    // Function to display the accordion items in CSV order
     function displayAccordion(figureList) {
       const container = document.getElementById('accordionContainer');
       container.innerHTML = ''; // Clear previous content
 
       if (figureList.length === 0) {
-        container.innerHTML = '<p>No figures match the selected filters.</p>';
+        container.innerHTML = '<p>Nessuna figura corrisponde ai filtri selezionati.</p>';
         return;
       }
 
       figureList.forEach(figure => {
-        // Create the accordion item container
         const item = document.createElement('div');
         item.className = 'accordion-item';
 
-        // Create the header (always visible)
+        // Accordion header (always visible)
         const header = document.createElement('div');
         header.className = 'accordion-header';
         header.textContent = figure.Figura;
         header.addEventListener('click', () => {
-          // If there's a currently active item (and it's not the one clicked), collapse it and pause its video.
+          // If another item is open, close it and pause its video.
           if (currentActiveItem && currentActiveItem !== item) {
             const oldVideo = currentActiveItem.querySelector('video');
-            if (oldVideo) {
-              oldVideo.pause();
-            }
+            if (oldVideo) oldVideo.pause();
             currentActiveItem.classList.remove('active');
           }
-          // Determine if we're expanding this item.
+          // Toggle the clicked item.
           const isExpanding = !item.classList.contains('active');
-          // Toggle this item's active state.
           item.classList.toggle('active');
           currentActiveItem = item.classList.contains('active') ? item : null;
-          
-          // Play or pause the video as needed.
+
+          // Play or pause the video based on the new state.
           const videoEl = item.querySelector('video');
           if (videoEl) {
             if (isExpanding) {
@@ -175,23 +189,25 @@
         });
         item.appendChild(header);
 
-        // Create the content section (hidden by default)
+        // Accordion content (hidden by default)
         const content = document.createElement('div');
         content.className = 'accordion-content';
+        // For display, treat empty Stile and Presa as "Non specificato"
+        const displayStile = figure.Stile === "" ? "Non specificato" : figure.Stile;
+        const displayPresa = figure.Presa === "" ? "Non specificato" : figure.Presa;
         content.innerHTML = `
-          <video src="video/${figure.Video}.mp4" loop muted playsinline></video>
+          ${ figure.Video !== "" ? `<video src="video/${figure.Video}.mp4" loop muted playsinline></video>` 
+                                   : '<p><em>Nessun video disponibile.</em></p>' }
           <p><strong>Tempi:</strong> ${figure.Tempi}</p>
-          <p><strong>Stile:</strong> ${figure.Stile}</p>
-          <p><strong>Presa:</strong> ${figure.Presa}</p>
+          <p><strong>Stile:</strong> ${displayStile}</p>
+          <p><strong>Presa:</strong> ${displayPresa}</p>
         `;
         item.appendChild(content);
-
-        // Append the accordion item to the container
         container.appendChild(item);
       });
     }
 
-    // Helper: Get selected values from a filter group by its container ID
+    // Helper to get selected values from a filter group
     function getSelectedValues(groupId) {
       const checkboxes = document.querySelectorAll(`#${groupId} input[type="checkbox"]`);
       return Array.from(checkboxes)
@@ -199,47 +215,60 @@
                   .map(cb => cb.value);
     }
 
-    // Function to filter figures based on multiple checkbox filters
+    // Filter the figures based on selected options
     function filterFigures() {
       const selectedTempi = getSelectedValues('tempiFilterGroup');
       const selectedStile = getSelectedValues('stileFilterGroup');
       const selectedPresa = getSelectedValues('presaFilterGroup');
+      const videoFilter = document.querySelector('input[name="videoFilter"]:checked').value;
 
       const filteredFigures = figures.filter(figure => {
-        // For each group, if no checkbox is selected then accept all values,
-        // otherwise check if the figure's value is in the selected list.
-        const tempiMatch = selectedTempi.length === 0 || selectedTempi.includes(figure.Tempi.trim());
-        const stileMatch = selectedStile.length === 0 || selectedStile.includes(figure.Stile.trim().toLowerCase());
-        const presaMatch = selectedPresa.length === 0 || selectedPresa.includes(figure.Presa.trim().toLowerCase());
-        return tempiMatch && stileMatch && presaMatch;
+        // Check Tempi: if no filter is selected, accept all; otherwise, must match.
+        const tempiMatch = selectedTempi.length === 0 || selectedTempi.includes(figure.Tempi);
+        
+        // For Stile: treat empty as "non specificato"
+        let stileValue = figure.Stile === "" ? "non specificato" : figure.Stile;
+        const stileMatch = selectedStile.length === 0 || selectedStile.includes(stileValue);
+        
+        // For Presa: treat empty as "non specificato"
+        let presaValue = figure.Presa === "" ? "non specificato" : figure.Presa;
+        const presaMatch = selectedPresa.length === 0 || selectedPresa.includes(presaValue);
+        
+        // Video filter: check whether a video is available (non-empty) or not.
+        const videoPresent = figure.Video !== "";
+        const videoMatch = videoFilter === "all" ||
+                           (videoFilter === "with" ? videoPresent : !videoPresent);
+
+        return tempiMatch && stileMatch && presaMatch && videoMatch;
       });
 
       displayAccordion(filteredFigures);
     }
 
-    // Add event listeners to all filter checkboxes
+    // Add event listeners to all filter inputs.
     document.querySelectorAll('.filter-controls input[type="checkbox"]').forEach(cb => {
       cb.addEventListener('change', filterFigures);
     });
+    document.querySelectorAll('.filter-controls input[name="videoFilter"]').forEach(rb => {
+      rb.addEventListener('change', filterFigures);
+    });
 
-    // Fetch the CSV file from the repository and parse it
+    // Fetch and parse the CSV file
     fetch('lista_figure.csv')
       .then(response => response.text())
       .then(csvText => {
         const results = Papa.parse(csvText, { header: true, skipEmptyLines: true });
         figures = results.data;
-
-        // Normalize text values
+        // Normalize and trim the fields.
         figures.forEach(item => {
-          item.Tempi = item.Tempi.trim();
-          item.Stile = item.Stile.trim().toLowerCase();
-          item.Presa = item.Presa.trim().toLowerCase();
+          item.Tempi = item.Tempi ? item.Tempi.trim() : "";
+          item.Stile = item.Stile ? item.Stile.trim().toLowerCase() : "";
+          item.Presa = item.Presa ? item.Presa.trim().toLowerCase() : "";
+          item.Video = item.Video ? item.Video.trim() : "";
         });
-
-        // Initially display all figures in CSV order
         displayAccordion(figures);
       })
-      .catch(error => console.error("Error loading CSV file:", error));
+      .catch(error => console.error("Errore nel caricamento del CSV:", error));
   </script>
 </body>
 </html>
