@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Lindy Hop & Boogie Woogie Figures</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Include Papa Parse via CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
+  <style>
+    /* Basic styling */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f8f8f8;
+    }
+    header {
+      background-color: #333;
+      color: #fff;
+      padding: 10px;
+      text-align: center;
+    }
+    .filter-controls {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      padding: 10px;
+      background: #444;
+    }
+    .filter-controls label {
+      margin: 0 10px;
+      color: #fff;
+    }
+    .cards {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      padding: 10px;
+    }
+    .card {
+      background: #fff;
+      width: 300px;
+      margin: 10px;
+      padding: 10px;
+      border-radius: 4px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .card h3 {
+      margin-top: 0;
+    }
+    video {
+      width: 100%;
+      border-radius: 4px;
+    }
+    /* Responsive design for mobile */
+    @media (max-width: 600px) {
+      .card {
+        width: 90%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Lindy Hop & Boogie Woogie Figures</h1>
+  </header>
+  
+  <div class="filter-controls">
+    <label>
+      Tempi:
+      <select id="tempiFilter">
+        <option value="all">All</option>
+        <option value="6">6</option>
+        <option value="8">8</option>
+        <option value="10">10</option>
+        <option value="12">12</option>
+      </select>
+    </label>
+    <label>
+      Stile:
+      <select id="stileFilter">
+        <option value="all">All</option>
+        <option value="passo base">Passo Base</option>
+        <option value="aperta">Aperta</option>
+      </select>
+    </label>
+    <label>
+      Presa:
+      <select id="presaFilter">
+        <option value="all">All</option>
+        <option value="contraria">Contraria</option>
+        <option value="doppia">Doppia</option>
+        <option value="normale">Normale</option>
+      </select>
+    </label>
+  </div>
+  
+  <main>
+    <div class="cards" id="cardsContainer">
+      <!-- Cards will be generated here -->
+    </div>
+  </main>
+  
+  <script>
+    let figures = []; // This will hold our parsed CSV data
+
+    // Function to create and display the cards
+    function displayCards(figureList) {
+      const container = document.getElementById('cardsContainer');
+      container.innerHTML = ''; // Clear previous content
+
+      if (figureList.length === 0) {
+        container.innerHTML = '<p>No figures match the selected filters.</p>';
+        return;
+      }
+
+      figureList.forEach(figure => {
+        // Build the card's HTML using data from the CSV.
+        // Adjust field names to match your CSV header (case-sensitive).
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = `
+          <h3>${figure.Figura}</h3>
+          <video src="video/${figure.Video}" autoplay loop muted playsinline></video>
+          <p><strong>Tempi:</strong> ${figure.Tempi}</p>
+          <p><strong>Stile:</strong> ${figure.Stile}</p>
+          <p><strong>Presa:</strong> ${figure.Presa}</p>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    // Function to filter the figures based on user selections
+    function filterFigures() {
+      const tempiValue = document.getElementById('tempiFilter').value;
+      const stileValue = document.getElementById('stileFilter').value;
+      const presaValue = document.getElementById('presaFilter').value;
+
+      const filteredFigures = figures.filter(figure => {
+        return (tempiValue === 'all' || figure.Tempi === tempiValue) &&
+               (stileValue === 'all' || figure.Stile.toLowerCase() === stileValue) &&
+               (presaValue === 'all' || figure.Presa.toLowerCase() === presaValue);
+      });
+
+      displayCards(filteredFigures);
+    }
+
+    // Add event listeners to filter controls
+    document.getElementById('tempiFilter').addEventListener('change', filterFigures);
+    document.getElementById('stileFilter').addEventListener('change', filterFigures);
+    document.getElementById('presaFilter').addEventListener('change', filterFigures);
+
+    // Fetch the CSV file from the repository and parse it
+    fetch('lista_figure.csv')
+      .then(response => response.text())
+      .then(csvText => {
+        const results = Papa.parse(csvText, { header: true, skipEmptyLines: true });
+        figures = results.data;
+
+        // If necessary, you can convert numeric fields (e.g., Tempi) here:
+        figures.forEach(item => {
+          item.Tempi = item.Tempi.trim(); // If you want to ensure it's a string, or use parseInt(item.Tempi) if numeric.
+          // Also, you might normalize text (e.g., lowercase) for consistent filtering:
+          item.Stile = item.Stile.trim().toLowerCase();
+          item.Presa = item.Presa.trim().toLowerCase();
+        });
+
+        // Initially display all figures
+        displayCards(figures);
+      })
+      .catch(error => console.error("Error loading CSV file:", error));
+  </script>
+</body>
+</html>
