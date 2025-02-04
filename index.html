@@ -16,6 +16,13 @@
     *, *::before, *::after {
       box-sizing: border-box;
     }
+    
+    /* Prevent horizontal overflow on mobile */
+    html, body {
+      max-width: 100%;
+      overflow-x: hidden;
+    }
+    
     /* Dark Mode Styling */
     body {
       font-family: Arial, sans-serif;
@@ -28,6 +35,10 @@
       background-color: #222;
       color: #fff;
       padding: 10px;
+      text-align: center;
+    }
+    header h1 {
+      margin: 0 auto;
       text-align: center;
     }
     /* Filter Controls: each filter group is on a new line */
@@ -97,10 +108,14 @@
       border-radius: 4px;
       margin-bottom: 10px;
     }
+    /* Responsive adjustments for mobile */
     @media (max-width: 600px) {
       .accordion {
-        margin: 20px 10px;
+        margin: 20px 5px;
         padding: 0 5px;
+      }
+      .filter-controls {
+        padding: 10px 5px;
       }
     }
   </style>
