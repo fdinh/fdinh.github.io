@@ -4,6 +4,11 @@
   <meta charset="UTF-8">
   <title>Lindy Hop & Boogie Woogie Figures</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Favicon as SVG (for modern browsers) -->
+  <link rel="icon" type="image/svg+xml" href="data/logo.svg">
+  <!-- Fallback for browsers that do not support SVG -->
+  <link rel="icon" type="image/png" sizes="32x32" href="data/logo32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="data/logo16.png">
   <!-- Include Papa Parse via CDN -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
   <style>
@@ -25,16 +30,15 @@
       padding: 10px;
       text-align: center;
     }
+    /* Filter Controls: each filter group is on a new line */
     .filter-controls {
       background: #333;
       padding: 10px;
       color: #fff;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
     }
-    .filter-group {
-      margin: 5px 10px;
+    .filter-controls .filter-group {
+      display: block;
+      margin-bottom: 10px;
     }
     .filter-group span {
       margin-right: 5px;
@@ -59,12 +63,25 @@
       overflow: hidden;
       box-shadow: 0 2px 4px rgba(0,0,0,0.5);
     }
+    /* Accordion header styled as a flex container */
     .accordion-header {
       padding: 10px;
       cursor: pointer;
       background: #2a2a2a;
       user-select: none;
       color: #fff;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    /* Title on left and Tempi on right */
+    .figure-title {
+      font-size: 16px;
+      font-weight: bold;
+    }
+    .figure-tempi {
+      font-size: 14px;
+      opacity: 0.8;
     }
     .accordion-content {
       display: none;
@@ -109,7 +126,6 @@
     <!-- Stile Filter -->
     <div class="filter-group" id="stileFilterGroup">
       <span>Stile:</span>
-      <label><input type="checkbox" value="non specificato">Non specificato</label>
       <label><input type="checkbox" value="aperta">Aperta</label>
       <label><input type="checkbox" value="passo base">Passo Base</label>
       <label><input type="checkbox" value="caramelle">Caramelle</label>
@@ -118,7 +134,6 @@
     <!-- Presa Filter -->
     <div class="filter-group" id="presaFilterGroup">
       <span>Presa:</span>
-      <label><input type="checkbox" value="non specificato">Non specificato</label>
       <label><input type="checkbox" value="standard">Standard</label>
       <label><input type="checkbox" value="separati">Separati</label>
       <label><input type="checkbox" value="doppia">Doppia</label>
@@ -164,7 +179,13 @@
         // Accordion header (always visible)
         const header = document.createElement('div');
         header.className = 'accordion-header';
-        header.textContent = figure.Figura;
+        // Determine if the figure has a video
+        const hasVideo = figure.Video !== "";
+        // Build header: add 🎞️ emoji if video is available and append Tempi on the right.
+        header.innerHTML = `
+          <span class="figure-title">${hasVideo ? '🎞️ ' : ''}${figure.Figura}</span>
+          <span class="figure-tempi">${figure.Tempi}</span>
+        `;
         header.addEventListener('click', () => {
           // If another item is open, close it and pause its video.
           if (currentActiveItem && currentActiveItem !== item) {
@@ -192,15 +213,12 @@
         // Accordion content (hidden by default)
         const content = document.createElement('div');
         content.className = 'accordion-content';
-        // For display, treat empty Stile and Presa as "Non specificato"
-        const displayStile = figure.Stile === "" ? "Non specificato" : figure.Stile;
-        const displayPresa = figure.Presa === "" ? "Non specificato" : figure.Presa;
         content.innerHTML = `
           ${ figure.Video !== "" ? `<video src="video/${figure.Video}.mp4" loop muted playsinline></video>` 
                                    : '<p><em>Nessun video disponibile.</em></p>' }
           <p><strong>Tempi:</strong> ${figure.Tempi}</p>
-          <p><strong>Stile:</strong> ${displayStile}</p>
-          <p><strong>Presa:</strong> ${displayPresa}</p>
+          <p><strong>Stile:</strong> ${figure.Stile}</p>
+          <p><strong>Presa:</strong> ${figure.Presa}</p>
         `;
         item.appendChild(content);
         container.appendChild(item);
@@ -225,15 +243,9 @@
       const filteredFigures = figures.filter(figure => {
         // Check Tempi: if no filter is selected, accept all; otherwise, must match.
         const tempiMatch = selectedTempi.length === 0 || selectedTempi.includes(figure.Tempi);
-        
-        // For Stile: treat empty as "non specificato"
-        let stileValue = figure.Stile === "" ? "non specificato" : figure.Stile;
-        const stileMatch = selectedStile.length === 0 || selectedStile.includes(stileValue);
-        
-        // For Presa: treat empty as "non specificato"
-        let presaValue = figure.Presa === "" ? "non specificato" : figure.Presa;
-        const presaMatch = selectedPresa.length === 0 || selectedPresa.includes(presaValue);
-        
+        // For Stile and Presa, if no filter is selected, accept all.
+        const stileMatch = selectedStile.length === 0 || selectedStile.includes(figure.Stile);
+        const presaMatch = selectedPresa.length === 0 || selectedPresa.includes(figure.Presa);
         // Video filter: check whether a video is available (non-empty) or not.
         const videoPresent = figure.Video !== "";
         const videoMatch = videoFilter === "all" ||
