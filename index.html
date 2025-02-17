@@ -103,12 +103,17 @@
     .accordion-item.active .accordion-content {
       display: block;
     }
-    /* Video container: placeholder for lazy-loaded video */
+    /* Updated video container styling */
     .video-container {
       position: relative;
       width: 100%;
+      overflow: hidden;
+    }
+    .video-container video {
+      display: block;
+      width: 100%;
       height: auto;
-      min-height: 200px; /* adjust as needed */
+      max-width: 100%;
     }
     /* Spinner styling */
     .spinner {
@@ -272,19 +277,16 @@
       videoEl.setAttribute('loop', '');
       videoEl.setAttribute('muted', '');
       videoEl.setAttribute('playsinline', '');
-      // When the video has loaded, hide the spinner.
       videoEl.addEventListener('loadeddata', () => {
         const spinner = container.querySelector('.spinner');
         if (spinner) spinner.style.display = 'none';
         videoEl.play();
       });
-      // Set the source (this begins loading the video).
       videoEl.src = videoSrc;
       container.appendChild(videoEl);
     }
 
     // Function to remove the video element from an accordion item.
-    // This stops further network activity and frees memory.
     function removeVideo(item) {
       const container = item.querySelector('.video-container');
       if (!container) return;
@@ -333,7 +335,6 @@
       .then(csvText => {
         const results = Papa.parse(csvText, { header: true, skipEmptyLines: true });
         figures = results.data;
-        // Normalize and trim fields.
         figures.forEach(item => {
           item.Tempi = item.Tempi ? item.Tempi.trim() : "";
           item.Stile = item.Stile ? item.Stile.trim().toLowerCase() : "";
