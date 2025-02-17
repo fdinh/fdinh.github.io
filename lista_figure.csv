@@ -5,61 +5,70 @@ Freeze,2,,standard,
 Giro lui,2,,separati,
 Twist ,4,,doppia,
 Pull&push,4,,doppia,
-Cambio lui,6,,standard,
-Cambio lei ,6,,standard,
-Barrel roll ,6,,standard,
-Cambio con apertura gambe ,6,, ,
-Cambio con controsterzo ,6,,standard,
-Cambio senza mani,6,, ,
+Cambio lui,6,aperta,standard,cambio
+Cambio lei ,6,aperta,standard,cambio_lui
+Barrel roll ,6,aperta,standard,barrelroll
+Cambio con apertura gambe ,6,variazione,standard,cambio_gambe
+Cambio con controsterzo ,6,,standard,controsterzo
+Cambio senza mani,6,aperta,standard,senza_mani
 Cambio mani incrociate,6,,incrociata,
-Cambio tacco punta tacco punta ,6,,standard,
-Cambio posto aperto basso,6,, ,
-Cambio skip up 34 skip up indietro 56,6,,standard,
-Sugar push,6,,doppia,
-Fonzie,6,,standard,
-Base,6,,standard,
-Base gira lei ,6,,standard,
-Base gira lui ,6,,standard,
+Cambio tacco punta,6,,standard,cambio_taccopunta
+Cambio posto aperto basso,6,,standard,
+Chiusura bassa,6,aperta,standard,chiusura_bassa
+Cambio skip up,6,,standard,cambio_skipup
+Sugar push,6,aperta,doppia,sugar_push
+Fonzie petto,6,aperta,standard,fonzie_petto
+Fonzie schiena,6,aperta,standard,fonzie
+Base,6,,standard,base
+Base gira lei ,6,,standard,giro_lei
+Base gira lui ,6,,standard,giro_lui
 Base doppio giro ,6,,standard,
 Cambi a doppie mani e variazioni,6,,doppia,
-Base tacco punta tacco punta ,6,,standard,
-Base lei spinge via petto ,6,,standard,
-Base lei spinge via schiena ,6,,standard,
-Base knee slap (coreo boogie C2) ,6,,standard,
+Base tacco punta,6,,standard,base_taccopunta
+Chiuso tacco punta,6,,standard,chiuso_taccopunta
+Base knee slap (coreo boogie C2) ,6,,standard,knee_slap
 Swingout 6T(classe C) ,6,,standard,
 Cambio flip flop,6,, ,
-Passo base kick al 6,6,,standard,
+Passo base kick al 6,6,,standard,base_kick6
 Base a presa contraria,6,aperta,standard,cambio_contrario
 Contrario base,6,aperta,contraria,contrario_base
 Contrario base 8,8,aperta,contraria,contrario_base8
 Contrario sciabolata,8,passo base,contraria,contrario_sciabolata
-Swingout ,8,,standard,
-Swingout Savoy ,8,,standard,
-Swingout inside turn ,8,,standard,
-Swingout outside turn ,8,,standard,
-Swingout double twist ,8,,standard,
-Swingout con salto all'indietro ,8,,standard,
-Swingout tripli step (larosa) ,8,,standard,
-Swingout shorty George (larosa) ,8,,standard,
-Swingout salto piedi (larosa) ,8,,standard,
-Swingout lui/lei fermi,8,,standard,
-Texas Tommy ,8,,standard,
-Texas Tommy finisce chiuso,8,,standard,
-Texas Tommy con cambio giro lei,8,,standard,
+Swingout ,8,swingout,standard,swingout
+Swingout Savoy ,8,swingout,standard,swingout_savoy
+Swingout inside turn ,8,swingout,standard,singout_insideturn
+Swingout outside turn ,8,swingout,standard,swingout_outsideturn
+Swingout outside turn finisher,8,swingout,standard,swingout_outsideturnfinish
+Swingout double twist ,8,swingout,standard,swingout_doubletwist
+Swingout con salto all'indietro ,8,swingout,standard,swingout_saltoindietro
+Swingout con salto in avanti,8,swingout,standard,swingout_saltoavanti
+Swingout tripli step (larosa) ,8,swingout,standard,
+Swingout shorty George (larosa) ,8,swingout,standard,
+Swingout salto piedi (larosa) ,8,swingout,standard,
+Swingout lui/lei fermi,8,swingout,standard,swingout_fermo
+Texas Tommy ,8,swingout,standard,texastommy
+Texas Tommy giro doppio,8,swingout,standard,texastommy_girodoppio
+Texas Tommy controsterzo,8,swingout,standard,texastommy_controsterzo
 Cambio posto con finta (coreo boogie D3) ,8,, ,
-Lindy circle CA AA AC CC,8,,standard,
-He goes ,8,,chiusa,
-She goes ,8,,chiusa,
-Promenade semplice lei/lui,8,,chiusa,
+Lindy circle chiuso chiuso,8,,standard,
+Lindy circle chiuso aperto,8,,standard,
+Lindy circle aperto chiuso,8,,standard,
+Lindy circle aperto aperto,8,,standard,
+Yoyo lui,8,,chiusa,yoyo_lui
+Yoyo lei,8,,chiusa,yoyo_lei
+Promenade semplice lei,8,,chiusa,promenade_lei
+Promenade semplice lui,8,,chiusa,promenade_lui
 Barrel roll con richiamo lei (coreo boogie C2) ,8,, ,
-Send out + extra spin (coreo boogie A1) ,8,,chiusa,
-Basket,8,,doppia,
-Basket + giro lei,8,,doppia,
+Send out + extra spin (coreo boogie A1) ,8,,chiusa,sendout_extraspin
+Basket,8,,doppia,basket
+Basket + giro lei,8,,doppia,basket_girolei
 Basket + giro lui,8,aperta,doppia,basket_girolui
 Fenicottero ,8,,incrociata,
 Casque minne (coreo boogie D3),8,, ,
-cambio con shuffle frontale sul 5,8,, ,
-cambio con shuffle retro sul 5,8,, ,
+Cambio con shuffle frontale sul 5,8,, ,
+Cambio con shuffle retro sul 5,8,, ,
+Cambio con blocco,8,aperta,standard,cambio_blocco
+Barrel roll con giro,8,aperta,standard,barrelroll8
 Sugar push doppio ,10,, ,
 Muletto,10,,standard,
 Basket sbagliato ,10,, ,
@@ -67,8 +76,10 @@ Casqué minne laterale (coreo boogie D5),10,, ,
 Doppio sugar push ,10,,doppia,
 Flip flop,10,aperta,standard,flip_flop
 Cambio shuffle,12,aperta,standard,cambio_shuffle
+Var. punta punta,12,aperta,standard,var_punta
+Var. side kick,12,aperta,standard,var_sidekick
 Richiama lato sx + manda fuori con extra spin (coreo boogie D1) ,16,, ,
-Promenade lindy,16,,chiusa,
+Promenade lindy,16,,chiusa,promenade
 Tuck turn lato sx + manda fuori con extra spin + pausa (coreo max) ,16,, ,
 Texas Tommy Var. Frankie six ,16,, ,
 Kick the dog 4x + ritorno ,16,,chiusa,
@@ -77,6 +88,8 @@ Swingout pas de bourré (coreo boogie D4) ,16,, ,
 Sendout footwork + cambio + twist (coreo boogie C1),16,, ,
 Base + footwork tacco tacco sul 5,16,,standard,base_footwork5
 She goes + richiamo sx,16,,chiusa,
+Accappatoio chiuso,16,,chiusa,accappatoio_chiuso
+Accappatoio con giro,16,,chiusa,accappatoio_giro
 Passo mambo,4,caramelle,standard,
 Fall of the log ,4,caramelle,separati,
 Tacky Annie ,4,caramelle,separati,
