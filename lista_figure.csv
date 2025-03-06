@@ -1,9 +1,8 @@
 Figura,Tempi,Stile,Presa,Video
-Extra spin,2,,standard,
-Switch ,2,,standard,
+Extra spin,2,,standard,extraspin
+Switch ,2,,standard,switch
 Freeze,2,,standard,
-Giro lui,2,,separati,
-Twist ,4,,doppia,
+Twist ,4,,doppia,twist
 Pull&push,4,,doppia,
 Cambio lui,6,aperta,standard,cambio
 Cambio lei ,6,aperta,standard,cambio_lui
@@ -19,10 +18,10 @@ Cambio skip up,6,,standard,cambio_skipup
 Sugar push,6,aperta,doppia,sugar_push
 Fonzie petto,6,aperta,standard,fonzie_petto
 Fonzie schiena,6,aperta,standard,fonzie
-Base,6,,standard,base
-Base gira lei ,6,,standard,giro_lei
-Base gira lui ,6,,standard,giro_lui
-Base doppio giro ,6,,standard,
+Base,6,aperta,standard,base
+Base gira lei ,6,aperta,standard,giro_lei
+Base gira lui ,6,aperta,standard,giro_lui
+Base doppio giro ,6,aperta,standard,giro_entrambi
 Cambi a doppie mani e variazioni,6,,doppia,
 Base tacco punta,6,,standard,base_taccopunta
 Chiuso tacco punta,6,,standard,chiuso_taccopunta
@@ -31,6 +30,8 @@ Swingout 6T(classe C) ,6,,standard,
 Cambio flip flop,6,, ,
 Passo base kick al 6,6,,standard,base_kick6
 Base a presa contraria,6,aperta,standard,cambio_contrario
+Zampa gatto a 6,6,,chiusa,zampagatto6
+Zampa gatto a 8,8,,chiusa,zampagatto8
 Contrario base,6,aperta,contraria,contrario_base
 Contrario base 8,8,aperta,contraria,contrario_base8
 Contrario sciabolata,8,passo base,contraria,contrario_sciabolata
@@ -50,10 +51,10 @@ Texas Tommy ,8,swingout,standard,texastommy
 Texas Tommy giro doppio,8,swingout,standard,texastommy_girodoppio
 Texas Tommy controsterzo,8,swingout,standard,texastommy_controsterzo
 Cambio posto con finta (coreo boogie D3) ,8,, ,
-Lindy circle chiuso chiuso,8,,standard,
-Lindy circle chiuso aperto,8,,standard,
-Lindy circle aperto chiuso,8,,standard,
-Lindy circle aperto aperto,8,,standard,
+Lindy circle chiuso chiuso,8,swingout,standard,circleCC
+Lindy circle chiuso aperto,8,swingout,standard,circleCA
+Lindy circle aperto chiuso,8,swingout,standard,circleAC
+Lindy circle aperto aperto,8,swingout,standard,circleAA
 Yoyo lui,8,,chiusa,yoyo_lui
 Yoyo lei,8,,chiusa,yoyo_lei
 Promenade semplice lei,8,,chiusa,promenade_lei
@@ -63,33 +64,37 @@ Send out + extra spin (coreo boogie A1) ,8,,chiusa,sendout_extraspin
 Basket,8,,doppia,basket
 Basket + giro lei,8,,doppia,basket_girolei
 Basket + giro lui,8,aperta,doppia,basket_girolui
-Fenicottero ,8,,incrociata,
-Casque minne (coreo boogie D3),8,, ,
+Fenicottero ,8,,incrociata,fenicottero
+Casque frontale,8,aperta,incrociata,casque_frontale
+Casque laterale (coreo boogie D3),8,aperta,incrociata,casque_laterale
 Cambio con shuffle frontale sul 5,8,, ,
 Cambio con shuffle retro sul 5,8,, ,
 Cambio con blocco,8,aperta,standard,cambio_blocco
 Barrel roll con giro,8,aperta,standard,barrelroll8
-Sugar push doppio ,10,, ,
-Muletto,10,,standard,
-Basket sbagliato ,10,, ,
-Casqué minne laterale (coreo boogie D5),10,, ,
-Doppio sugar push ,10,,doppia,
+Sugar push doppio ,10,aperta,doppia,sugarpush_doppio
+Muletto,10,aperta,standard,muletto
+Basket doppio,10,aperta,doppia,basket_doppio
+Casqué minne laterale (coreo boogie D5),10,finisher,incrociata,
 Flip flop,10,aperta,standard,flip_flop
 Cambio shuffle,12,aperta,standard,cambio_shuffle
-Var. punta punta,12,aperta,standard,var_punta
-Var. side kick,12,aperta,standard,var_sidekick
+Var. punta punta,12,variazione,standard,var_punta
+Var. side kick,12,variazione,standard,var_sidekick
+Var. side kick freeze,12,variazione,standard,var_sidekick_freeze
+Var. side kick doppio passo,12,variazione,standard,var_sidekick_pp
+Var. side kick giro,10,variazione,standard,var_sidekick_giro
 Richiama lato sx + manda fuori con extra spin (coreo boogie D1) ,16,, ,
 Promenade lindy,16,,chiusa,promenade
 Tuck turn lato sx + manda fuori con extra spin + pausa (coreo max) ,16,, ,
 Texas Tommy Var. Frankie six ,16,, ,
-Kick the dog 4x + ritorno ,16,,chiusa,
-Marinaio (richiamo 8T + giro 8T),16,,doppia,
-Swingout pas de bourré (coreo boogie D4) ,16,, ,
+Kick the dog 4x + ritorno ,16,,chiusa,kick_dog
+Marinaio (richiamo 8T + giro 8T),16,,doppia,marinaio
+Swingout pas de bourré (coreo boogie D4) ,16,,aperta,swingout_pasdebourre
 Sendout footwork + cambio + twist (coreo boogie C1),16,, ,
 Base + footwork tacco tacco sul 5,16,,standard,base_footwork5
 She goes + richiamo sx,16,,chiusa,
 Accappatoio chiuso,16,,chiusa,accappatoio_chiuso
 Accappatoio con giro,16,,chiusa,accappatoio_giro
+Frankie six,18,aperta,incrociata,frankie6
 Passo mambo,4,caramelle,standard,
 Fall of the log ,4,caramelle,separati,
 Tacky Annie ,4,caramelle,separati,
@@ -97,20 +102,24 @@ Shim sham,4,caramelle,separati,
 Vigorsol,4,caramelle,standard,
 Ondeggiamenti ginocchio ,4,caramelle,standard,
 Shorty George ,8,caramelle,separati,
-Box step ,8,caramelle,separati,
-Camminata con finta presa,8,caramelle,separati,
-tallone tallone,2,caramelle,standard,
+Box step ,8,caramelle,separati,box_step
+Camminata con finta presa,8,caramelle,separati,camminata_finta
+Talloni lento,8,caramelle,standard,talloni_lento
+Talloni medio,4,caramelle,standard,talloni_medio
+Talloni veloce,4,caramelle,standard,talloni_veloce
 flip flop frontale,,caramelle, ,
 Passo Irish ,4,caramelle,standard,
 Swingout con salto avanti ,8,finisher,standard,
 Swingout con salto indietro ,8,finisher,standard,
-salto pas de chat,8,finisher,chiusa,
-salto sulla coscia ,8,finisher,chiusa,
-Promenade (classe C I) ,8,finisher,standard,
-Tada (classe C II) ,8,finisher,standard,
-Promenade con giro (classe C III) ,8,finisher,standard,
+salto pas de chat,8,finisher,chiusa,pas_de_chat
+salto sulla coscia ,8,finisher,chiusa,salto_coscia
+salto sulla coscia freeze,8,finisher,chiusa,salto_coscia_freeze
+Frog laterale,8,finisher,chiusa,frog_laterale
+Frog tandem,8,finisher,incrociata,frog_tandem
+Promenade (classe C I) ,8,finisher,standard,promenade_frontale_C
+Tada (classe C II) ,8,finisher,standard,tada_C
+Promenade con giro (classe C III) ,8,finisher,standard,promenade_giro_C
 Passa sotto lei (classe C IV) ,8,finisher,incrociata,
-Girotondo chiuso (classe C VI) ,8,finisher,chiusa,
-Frog,8,finisher,tandem,
-Torre di Pisa ,8,finisher,contraria,
-Casque,8,finisher,contraria,
+Halleluja (classe C VI) ,8,finisher,chiusa,halleluja_C
+Torre di Pisa ,8,finisher,contraria,torrepisa
+Casque,8,finisher,contraria,casque
